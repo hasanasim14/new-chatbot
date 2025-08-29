@@ -16,9 +16,110 @@ interface MessageProps {
   initialQuery?: string;
   hasUsedInitialQuery?: React.MutableRefObject<boolean>;
 }
+
 type Message = {
   role: "user" | "assistant";
   content: string;
+};
+
+// 👇 Custom inline markdown parser
+const CustomMarkdown: React.FC<{
+  content: string;
+  onClickButton: (text: string) => void;
+}> = ({ content, onClickButton }) => {
+  const regex = /<<<<(.*?),(.*?)>>>>/g;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(content)) !== null) {
+    const before = content.slice(lastIndex, match.index);
+    if (before) {
+      // render normal markdown for text before custom block
+      parts.push(
+        <ReactMarkdown
+          key={lastIndex}
+          components={{
+            a: ({ node, ...props }) => (
+              <a
+                className="text-blue-600 underline hover:text-blue-800"
+                target="_blank"
+                rel="noopener noreferrer"
+                {...props}
+              />
+            ),
+            pre: ({ node, ...props }) => (
+              <pre
+                className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
+                {...props}
+              />
+            ),
+            code: ({ node, ...props }) => (
+              <code className="bg-gray-100 rounded px-1 py-0.5" {...props} />
+            ),
+            strong: ({ node, ...props }) => (
+              <strong className="font-bold" {...props} />
+            ),
+            em: ({ node, ...props }) => <em className="italic" {...props} />,
+          }}
+        >
+          {before}
+        </ReactMarkdown>
+      );
+    }
+
+    const textToSend = match[1].trim();
+    const buttonLabel = match[2].trim();
+
+    // render button
+    parts.push(
+      <button
+        key={match.index}
+        className="cursor-pointer block w-full my-2 px-2 py-1 bg-[#8B00CC] text-white text-sm rounded hover:bg-[#8B00CC]/90 transition text-left"
+        onClick={() => onClickButton(textToSend)}
+      >
+        {buttonLabel}
+      </button>
+    );
+
+    lastIndex = regex.lastIndex;
+  }
+
+  const after = content.slice(lastIndex);
+  if (after) {
+    parts.push(
+      <ReactMarkdown
+        key={lastIndex}
+        components={{
+          a: ({ node, ...props }) => (
+            <a
+              className="text-blue-600 underline hover:text-blue-800"
+              target="_blank"
+              rel="noopener noreferrer"
+              {...props}
+            />
+          ),
+          pre: ({ node, ...props }) => (
+            <pre
+              className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
+              {...props}
+            />
+          ),
+          code: ({ node, ...props }) => (
+            <code className="bg-gray-100 rounded px-1 py-0.5" {...props} />
+          ),
+          strong: ({ node, ...props }) => (
+            <strong className="font-bold" {...props} />
+          ),
+          em: ({ node, ...props }) => <em className="italic" {...props} />,
+        }}
+      >
+        {after}
+      </ReactMarkdown>
+    );
+  }
+
+  return <>{parts}</>;
 };
 
 export default function Message({
@@ -57,7 +158,6 @@ export default function Message({
 
       const data = await res.json();
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const transformedMessages = data.map((msg: any) => ({
         role: msg.type === "user" ? "user" : "assistant",
         content: msg.content,
@@ -131,11 +231,9 @@ export default function Message({
       });
     }
 
-    // Update the previous messages length
     prevMessagesLength.current = messages.length;
   }, [messages, onUrlDetected]);
 
-  // Save cursor position
   useEffect(() => {
     if (!isLoading && inputRef.current) {
       inputRef.current.focus();
@@ -152,12 +250,11 @@ export default function Message({
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      console.log("the endpoint", `${process.env.NEXT_PUBLIC_BASE_URL}/agent`);
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/agent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: "3UZdrsMC0aHIxcIOlo1cUrFmLSb57Ule",
+          authorization: "VN04ftwaiCOysS8Vemq8TFxGRB69g6qk",
         },
         body: JSON.stringify({
           query: userQuery,
@@ -179,7 +276,6 @@ export default function Message({
         setTempSessionID(data?.data?.sessionID);
       }
 
-      // Add assistant response to chat
       const assistantMessage =
         data.data?.Message || "I couldn't process that request.";
       setMessages((prev) => [
@@ -207,7 +303,6 @@ export default function Message({
 
   const sendMessage = async (customMessage?: string) => {
     const userQuery = customMessage || message.trim();
-
     if (!userQuery || isLoading) return;
 
     setShowHomePage(false);
@@ -228,11 +323,7 @@ export default function Message({
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="flex items-center p-4 border-b bg-white">
-        <div className="flex items-center">
-          <div>
-            <h2 className="font-bold text-xl">Stormfiber Support</h2>
-          </div>
-        </div>
+        <h2 className="font-bold text-xl">Mayfair Support</h2>
       </div>
 
       {/* Error Bar */}
@@ -250,7 +341,7 @@ export default function Message({
               if (msg.role === "user") {
                 return (
                   <div key={index} className="flex justify-end w-full">
-                    <div className="bg-[#002d88] text-white text-sm rounded-lg px-4 py-2 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
+                    <div className="bg-[#8B00CC] text-white text-sm rounded-lg px-4 py-2 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
                       <p className="whitespace-pre-wrap">{msg.content}</p>
                     </div>
                   </div>
@@ -260,49 +351,18 @@ export default function Message({
                   <div key={index} className="flex justify-start w-full">
                     <div className="bg-gray-200 text-gray-800 text-sm rounded-lg px-4 py-2 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
                       <div className="whitespace-pre-wrap">
-                        <ReactMarkdown
-                          components={{
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
-                            a: ({ node, ...props }) => (
-                              <a
-                                className="text-blue-600 underline hover:text-blue-800"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                {...props}
-                              />
-                            ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
-                            pre: ({ node, ...props }) => (
-                              <pre
-                                className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
-                                {...props}
-                              />
-                            ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
-                            code: ({ node, ...props }) => (
-                              <code
-                                className="bg-gray-100 rounded px-1 py-0.5"
-                                {...props}
-                              />
-                            ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
-                            strong: ({ node, ...props }) => (
-                              <strong className="font-bold" {...props} />
-                            ),
-                            /* eslint-disable @typescript-eslint/no-unused-vars */
-                            em: ({ node, ...props }) => (
-                              <em className="italic" {...props} />
-                            ),
-                          }}
-                        >
-                          {msg.content}
-                        </ReactMarkdown>
+                        <CustomMarkdown
+                          content={msg.content}
+                          onClickButton={(text) => sendMessage(text)}
+                        />
                       </div>
                     </div>
                   </div>
                 );
               }
             })}
+
+            {/* Loading indicator */}
             {isLoading && (
               <div className="flex justify-start">
                 <div className="bg-gray-200 text-gray-800 rounded-lg px-4 py-2">
@@ -320,6 +380,7 @@ export default function Message({
                 </div>
               </div>
             )}
+
             <div ref={messagesEndRef} />
           </div>
         </div>

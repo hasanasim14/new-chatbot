@@ -1,7 +1,17 @@
 "use client";
 
 import type React from "react";
-import { Cable, ChevronRight, Gauge, MapPin, Package } from "lucide-react";
+import {
+  Briefcase,
+  Cable,
+  ChevronRight,
+  Gauge,
+  Info,
+  MapPin,
+  Package,
+  Phone,
+  Users,
+} from "lucide-react";
 import { TextAreaMessage } from "./TextAreaMessage";
 
 interface HomePageProps {
@@ -25,24 +35,24 @@ export default function HomePage({
 }: HomePageProps) {
   const cardItems = [
     {
-      text: "Are you in my area?",
-      icon: <MapPin className="h-5 w-5 text-[#002d88]" />,
-      query: "Are you in my area?",
+      text: "What Is Mayfair?",
+      icon: <Info className="h-5 w-5 text-[#8B00CC]" />,
+      query: "What is mayfair?",
     },
     {
-      text: "What are your packages?",
-      icon: <Package className="h-5 w-5 text-[#002d88]" />,
-      query: "What are your packages?",
+      text: "What Services Do You Provide?",
+      icon: <Briefcase className="h-5 w-5 text-[#8B00CC]" />,
+      query: "What services do you provide?",
     },
     {
-      text: "My speed is too slow",
-      icon: <Gauge className="h-5 w-5 text-[#002d88]" />,
-      query: "My speed is too slow",
+      text: "LeaderShip Team",
+      icon: <Users className="h-5 w-5 text-[#8B00CC]" />,
+      query: "LeaderShip Team",
     },
     {
-      text: "How do I get a connection?",
-      icon: <Cable className="h-5 w-5 text-[#002d88]" />,
-      query: "How do I get a connection?",
+      text: "Contact us",
+      icon: <Phone className="h-5 w-5 text-[#8B00CC]" />,
+      query: "Contact us",
     },
   ];
 
@@ -51,8 +61,8 @@ export default function HomePage({
   };
 
   return (
-    <div className="flex flex-col h-full max-h-screen bg-gradient-to-br from-[#002d88] via-[#0033aa] to-[#0044cc]">
-      <div className="px-4 py-4 border-b border-white/20 backdrop-blur overflow-y-auto flex-1">
+    <div className="flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]">
+      <div className="px-4 py-4 backdrop-blur overflow-y-auto flex-1">
         <h2 className="text-xl font-semibold mb-0 text-white drop-shadow-sm">
           👋 How can I help you today?
         </h2>
@@ -60,7 +70,7 @@ export default function HomePage({
         <div className="flex-1 px-4 py-2">
           <div className="flex gap-4 mb-4"></div>
 
-          <div className="max-w-sm mx-auto bg-white/95 backdrop-blur-sm rounded-2xl border border-white/30 shadow-lg overflow-hidden">
+          <div className="max-w-sm mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
             <ul className="divide-y divide-gray-200">
               {cardItems.map((item, index) => (
                 <li
@@ -74,7 +84,7 @@ export default function HomePage({
                       {item.text}
                     </span>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-gray-400 stroke-[3] transition-colors duration-200 group-hover:text-[#002d88]" />
+                  <ChevronRight className="h-5 w-5 text-gray-400 stroke-[3] transition-colors duration-200 group-hover:text-[#8B00CC]" />
                 </li>
               ))}
             </ul>

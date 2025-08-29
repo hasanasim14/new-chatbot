@@ -66,7 +66,7 @@ export default function ChatButton() {
             <div className="flex justify-around bg-white rounded-b-2xl sticky bottom-0">
               <Button
                 variant="ghost"
-                className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#002d88] cursor-pointer"
+                className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#8B00CC] cursor-pointer"
                 onClick={() => navigateTo("home")}
               >
                 <Home className="h-6 w-6" />
@@ -74,7 +74,7 @@ export default function ChatButton() {
               </Button>
               <Button
                 variant="ghost"
-                className="flex flex-col items-center gap-1 h-auto text-[#002d88] cursor-pointer"
+                className="flex flex-col items-center gap-1 h-auto text-[#8B00CC] cursor-pointer"
                 onClick={() => navigateTo("message")}
               >
                 <MessageCircle className="h-6 w-6" />
@@ -104,7 +104,7 @@ export default function ChatButton() {
               <div className="flex justify-around border-b border-gray-200">
                 <Button
                   variant="ghost"
-                  className="flex flex-col items-center gap-1 h-auto text-[#002d88] cursor-pointer hover:text-[#002d88]"
+                  className="flex flex-col items-center gap-1 h-auto text-[#8B00CC] cursor-pointer hover:text-[#8B00CC]"
                   onClick={() => navigateTo("home")}
                 >
                   <Home className="h-6 w-6" />
@@ -112,7 +112,7 @@ export default function ChatButton() {
                 </Button>
                 <Button
                   variant="ghost"
-                  className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#002d88] cursor-pointer"
+                  className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#8B00CC] cursor-pointer"
                   onClick={() => navigateTo("message")}
                 >
                   <MessageCircle className="h-6 w-6" />
@@ -136,7 +136,9 @@ export default function ChatButton() {
             <Button
               className={`h-14 w-14 rounded-full shadow-xl cursor-pointer transition-all duration-300 ${
                 !open && "hover:scale-110"
-              } bg-gradient-to-br from-[#002d88] to-[#001a5a] hover:from-[#003399] hover:to-[#001f66] p-0 flex items-center justify-center`}
+              } bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF] 
+       hover:from-[#6E00A8] hover:via-[#9E33E6] hover:to-[#C266FF]
+       p-0 flex items-center justify-center`}
               aria-label="Open chat"
             >
               <MessageSquare className="h-6 w-6 text-white" />
