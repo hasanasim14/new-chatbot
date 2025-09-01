@@ -35,12 +35,11 @@ const CustomMarkdown: React.FC<{
   while ((match = regex.exec(content)) !== null) {
     const before = content.slice(lastIndex, match.index);
     if (before) {
-      // render normal markdown for text before custom block
       parts.push(
         <ReactMarkdown
           key={lastIndex}
           components={{
-            a: ({ node, ...props }) => (
+            a: ({ ...props }) => (
               <a
                 className="text-blue-600 underline hover:text-blue-800"
                 target="_blank"
@@ -48,19 +47,19 @@ const CustomMarkdown: React.FC<{
                 {...props}
               />
             ),
-            pre: ({ node, ...props }) => (
+            pre: ({ ...props }) => (
               <pre
                 className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
                 {...props}
               />
             ),
-            code: ({ node, ...props }) => (
+            code: ({ ...props }) => (
               <code className="bg-gray-100 rounded px-1 py-0.5" {...props} />
             ),
-            strong: ({ node, ...props }) => (
+            strong: ({ ...props }) => (
               <strong className="font-bold" {...props} />
             ),
-            em: ({ node, ...props }) => <em className="italic" {...props} />,
+            em: ({ ...props }) => <em className="italic" {...props} />,
           }}
         >
           {before}
@@ -91,7 +90,7 @@ const CustomMarkdown: React.FC<{
       <ReactMarkdown
         key={lastIndex}
         components={{
-          a: ({ node, ...props }) => (
+          a: ({ ...props }) => (
             <a
               className="text-blue-600 underline hover:text-blue-800"
               target="_blank"
@@ -99,19 +98,17 @@ const CustomMarkdown: React.FC<{
               {...props}
             />
           ),
-          pre: ({ node, ...props }) => (
+          pre: ({ ...props }) => (
             <pre
               className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
               {...props}
             />
           ),
-          code: ({ node, ...props }) => (
+          code: ({ ...props }) => (
             <code className="bg-gray-100 rounded px-1 py-0.5" {...props} />
           ),
-          strong: ({ node, ...props }) => (
-            <strong className="font-bold" {...props} />
-          ),
-          em: ({ node, ...props }) => <em className="italic" {...props} />,
+          strong: ({ ...props }) => <strong className="font-bold" {...props} />,
+          em: ({ ...props }) => <em className="italic" {...props} />,
         }}
       >
         {after}
@@ -158,6 +155,7 @@ export default function Message({
 
       const data = await res.json();
 
+      // eslint-disable-next-line
       const transformedMessages = data.map((msg: any) => ({
         role: msg.type === "user" ? "user" : "assistant",
         content: msg.content,

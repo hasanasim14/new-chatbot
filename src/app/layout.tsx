@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aiva X StormFiber",
+  title: "Aiva X Mayfair",
 };
 
 export default function RootLayout({

@@ -1,17 +1,7 @@
 "use client";
 
 import type React from "react";
-import {
-  Briefcase,
-  Cable,
-  ChevronRight,
-  Gauge,
-  Info,
-  MapPin,
-  Package,
-  Phone,
-  Users,
-} from "lucide-react";
+import { Briefcase, ChevronRight, Info, Phone, Users } from "lucide-react";
 import { TextAreaMessage } from "./TextAreaMessage";
 
 interface HomePageProps {
@@ -92,7 +82,6 @@ export default function HomePage({
         </div>
       </div>
 
-      {/* 👇 This will always stay at bottom */}
       <div className="mt-auto">
         <TextAreaMessage
           message={message}
