@@ -150,7 +150,6 @@ export default function ChatButton() {
             align="end"
             side="top"
             onInteractOutside={(e) => {
-              // Prevent closing when clicking the powered by link
               const target = e.target as HTMLElement;
               if (target.closest(".no-close")) {
                 e.preventDefault();

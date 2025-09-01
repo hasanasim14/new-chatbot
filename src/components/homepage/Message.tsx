@@ -252,7 +252,7 @@ export default function Message({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: "VN04ftwaiCOysS8Vemq8TFxGRB69g6qk",
+          authorization: process.env.NEXT_PUBLIC_AUTH_TOKEN ?? "",
         },
         body: JSON.stringify({
           query: userQuery,
