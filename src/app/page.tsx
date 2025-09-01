@@ -131,6 +131,13 @@ export default function ChatButton() {
 
       {/* Chat Button - unchanged */}
       <div className="fixed bottom-8 right-8 z-40 flex items-center gap-3 flex-row-reverse">
+        {!open && (
+          <div className="absolute -top-4 -left-24 flex items-center gap-2">
+            <span className="text-2xl text-white bg-gray-800 px-2 py-1 rounded-lg shadow border border-gray-700 animate-bounce">
+              Try me!
+            </span>
+          </div>
+        )}
         <Popover open={open} onOpenChange={setOpen} modal={false}>
           <PopoverTrigger asChild>
             <Button
