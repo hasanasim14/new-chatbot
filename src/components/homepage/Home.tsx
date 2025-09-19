@@ -3,9 +3,11 @@
 import type React from "react";
 import { Briefcase, ChevronRight, Info, Phone, Users } from "lucide-react";
 import { TextAreaMessage } from "./TextAreaMessage";
+import { Button } from "../ui/button";
 
 interface HomePageProps {
   onCardClick?: (content: string) => void;
+  onContactClick: () => void;
   message: string;
   isLoading: boolean;
   timeoutState: boolean;
@@ -16,6 +18,7 @@ interface HomePageProps {
 
 export default function HomePage({
   onCardClick,
+  onContactClick,
   message,
   isLoading,
   timeoutState,
@@ -39,22 +42,22 @@ export default function HomePage({
       icon: <Users className="h-5 w-5 text-[#8B00CC]" />,
       query: "LeaderShip Team",
     },
-    {
-      text: "Contact us",
-      icon: <Phone className="h-5 w-5 text-[#8B00CC]" />,
-      query: "Contact us",
-    },
   ];
 
   const handleCardClick = (content: string) => {
     onCardClick?.(content);
   };
 
+  const handleContact = () => {
+    onContactClick();
+  };
+
   return (
     <div className="flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]">
       <div className="px-4 py-4 backdrop-blur overflow-y-auto flex-1">
-        <h2 className="text-xl font-semibold mb-0 text-white drop-shadow-sm">
-          👋 How can I help you today?
+        <h2 className="text-xl font-semibold text-white drop-shadow-sm space-y-1">
+          <span className="block">👋 Hi, I’m your MayfairTech Assistant!</span>
+          <span className="block text-center">How can I help you today?</span>
         </h2>
 
         <div className="flex-1 px-4 py-2">
@@ -79,6 +82,13 @@ export default function HomePage({
               ))}
             </ul>
           </div>
+          <Button
+            className="w-full bg-white/95 mt-6 text-md"
+            variant="outline"
+            onClick={handleContact}
+          >
+            <Phone className="h-5 w-5 text-[#8B00CC]" /> Contact Us
+          </Button>
         </div>
       </div>
 

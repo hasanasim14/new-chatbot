@@ -22,7 +22,6 @@ type Message = {
   content: string;
 };
 
-// 👇 Custom inline markdown parser
 const CustomMarkdown: React.FC<{
   content: string;
   onClickButton: (text: string) => void;

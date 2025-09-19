@@ -14,8 +14,9 @@ import HomePage from "@/components/homepage/Home";
 import HeroSection from "@/components/homepage/HeroSection";
 import Image from "next/image";
 import Link from "next/link";
+import ContactUs from "@/components/homepage/ContactUsForm";
 
-type PopoverPage = "home" | "message";
+type PopoverPage = "home" | "message" | "contact";
 
 export default function ChatButton() {
   const [open, setOpen] = useState(false);
@@ -51,6 +52,14 @@ export default function ChatButton() {
     }
   };
 
+  const handleContactUsClicked = () => {
+    setCurrentPage("contact");
+  };
+
+  // const handleSubmission = () => {
+  //   setCurrentPage("home");
+  // };
+
   const renderPage = () => {
     switch (currentPage) {
       case "message":
@@ -84,12 +93,22 @@ export default function ChatButton() {
           </div>
         );
 
+      case "contact":
+        return (
+          <div className="flex flex-col h-full">
+            <ContactUs
+            //  handleSubmission={handleSubmission}
+            />
+          </div>
+        );
+
       default: // 'home'
         return (
           <div className="flex flex-col h-full">
             <div className="flex-1 overflow-y-auto">
               <HomePage
                 onCardClick={(content) => sendMessage(content)}
+                onContactClick={handleContactUsClicked}
                 message={message}
                 isLoading={isLoading}
                 timeoutState={timeoutState}
