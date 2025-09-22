@@ -63,7 +63,7 @@ export default function ContactUs({}) {
             Get In Touch
           </h2>
           <p className="text-purple-200 text-center mt-2">
-            We'd love to hear from you
+            We&apos;d love to hear from you
           </p>
         </div>
 
