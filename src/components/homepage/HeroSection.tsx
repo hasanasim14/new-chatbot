@@ -1,8 +1,17 @@
 import { CheckCircle2, Notebook, HandHelping } from "lucide-react";
+import { Poppins } from "next/font/google";
+
+export const Poppins_font = Poppins({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
 
 const HeroSection = () => {
   return (
-    <div className="relative min-h-screen w-full bg-white p-6 flex items-center justify-center">
+    <div
+      className={`${Poppins_font.className} relative min-h-screen w-full bg-white p-6 flex items-center justify-center`}
+    >
       <div className="max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 text-white shadow-2xl p-10 space-y-10">
         <div className="space-y-4 text-center">
           <h1 className="text-3xl md:text-4xl font-bold">

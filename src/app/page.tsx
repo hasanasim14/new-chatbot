@@ -56,9 +56,9 @@ export default function ChatButton() {
     setCurrentPage("contact");
   };
 
-  // const handleSubmission = () => {
-  //   setCurrentPage("home");
-  // };
+  const redirectToHome = () => {
+    setCurrentPage("home");
+  };
 
   const renderPage = () => {
     switch (currentPage) {
@@ -96,9 +96,7 @@ export default function ChatButton() {
       case "contact":
         return (
           <div className="flex flex-col h-full">
-            <ContactUs
-            //  handleSubmission={handleSubmission}
-            />
+            <ContactUs redirectToHome={redirectToHome} />
           </div>
         );
 
@@ -152,7 +150,7 @@ export default function ChatButton() {
       <div className="fixed bottom-8 right-8 z-40 flex items-center gap-3 flex-row-reverse">
         {!open && (
           <div className="absolute -top-4 -left-24 flex items-center gap-2">
-            <span className="text-2xl text-white bg-gray-800 px-2 py-1 rounded-lg shadow border border-gray-700 animate-bounce">
+            <span className="text-2xl text-white bg-gray-800 px-2 py-1 rounded-lg shadow animate-bounce">
               Try me!
             </span>
           </div>
@@ -160,7 +158,7 @@ export default function ChatButton() {
         <Popover open={open} onOpenChange={setOpen} modal={false}>
           <PopoverTrigger asChild>
             <Button
-              className={`h-14 w-14 rounded-full shadow-xl cursor-pointer transition-all duration-300 ${
+              className={`h-14 w-14 rounded-full shadow-xl transition-all duration-300 ${
                 !open && "hover:scale-110"
               } bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF] 
        hover:from-[#6E00A8] hover:via-[#9E33E6] hover:to-[#C266FF]

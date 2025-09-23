@@ -1,9 +1,10 @@
 "use client";
 
 import type React from "react";
-import { Briefcase, ChevronRight, Info, Phone, Users } from "lucide-react";
+import { ChevronRight, Headphones, Info, Phone, Users } from "lucide-react";
 import { TextAreaMessage } from "./TextAreaMessage";
 import { Button } from "../ui/button";
+import { Poppins_font } from "./HeroSection";
 
 interface HomePageProps {
   onCardClick?: (content: string) => void;
@@ -28,19 +29,19 @@ export default function HomePage({
 }: HomePageProps) {
   const cardItems = [
     {
-      text: "What Is Mayfair?",
+      text: "About Mayfair",
       icon: <Info className="h-5 w-5 text-[#8B00CC]" />,
       query: "What is mayfair?",
     },
     {
-      text: "What Services Do You Provide?",
-      icon: <Briefcase className="h-5 w-5 text-[#8B00CC]" />,
-      query: "What services do you provide?",
+      text: "Leadership Team",
+      icon: <Users className="h-5 w-5 text-[#8B00CC]" />,
+      query: "Leadership Team",
     },
     {
-      text: "LeaderShip Team",
-      icon: <Users className="h-5 w-5 text-[#8B00CC]" />,
-      query: "LeaderShip Team",
+      text: "Customer Support",
+      icon: <Headphones className="h-5 w-5 text-[#8B00CC]" />,
+      query: "Customer Support",
     },
   ];
 
@@ -53,9 +54,11 @@ export default function HomePage({
   };
 
   return (
-    <div className="flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]">
-      <div className="px-4 py-4 backdrop-blur overflow-y-auto flex-1">
-        <h2 className="text-xl font-semibold text-white drop-shadow-sm space-y-1">
+    <div
+      className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]`}
+    >
+      <div className="p-3 backdrop-blur overflow-y-auto flex-1">
+        <h2 className="text-lg font-semibold text-white drop-shadow-sm space-y-1 mt-4">
           <span className="block">👋 Hi, I’m your MayfairTech Assistant!</span>
           <span className="block text-center">How can I help you today?</span>
         </h2>
@@ -82,13 +85,24 @@ export default function HomePage({
               ))}
             </ul>
           </div>
-          <Button
-            className="w-full bg-white/95 mt-6 text-md"
-            variant="outline"
-            onClick={handleContact}
-          >
-            <Phone className="h-5 w-5 text-[#8B00CC]" /> Contact Us
-          </Button>
+
+          <div className="max-w-sm mx-auto mt-6 p-5 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl text-center">
+            <h3 className="text-lg font-semibold text-[#8B00CC] mb-2 flex items-center justify-center gap-2">
+              <Phone className="h-5 w-5 text-[#8B00CC]" />
+              Get in Touch
+            </h3>
+            <p className="text-gray-700 text-sm mb-4">
+              We&apos;d love to hear from you! Fill out the form and we&apos;ll
+              get back to you shortly.
+            </p>
+            <Button
+              onClick={handleContact}
+              className="w-full text-white bg-[#8B00CC] transition-all hover:bg-[#8B00CC]/90"
+            >
+              Contact Us
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
