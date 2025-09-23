@@ -70,6 +70,7 @@ export default function ChatButton() {
                 initialQuery={initialQuery}
                 onUrlDetected={(url) => setCurrentUrl(url)}
                 hasUsedInitialQuery={hasUsedInitialQuery}
+                handleContactUsClicked={handleContactUsClicked}
               />
             </div>
             <div className="flex justify-around bg-white rounded-b-2xl sticky bottom-0">

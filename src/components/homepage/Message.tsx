@@ -9,13 +9,15 @@ import {
   setTempErrorMessage,
 } from "@/lib/tempStore";
 import { TextAreaMessage } from "./TextAreaMessage";
-import ReactMarkdown from "react-markdown";
 import { Poppins_font } from "./HeroSection";
+import { ArrowRight } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface MessageProps {
   onUrlDetected: (url: string) => void;
   initialQuery?: string;
   hasUsedInitialQuery?: React.MutableRefObject<boolean>;
+  handleContactUsClicked: () => void;
 }
 
 type Message = {
@@ -23,21 +25,30 @@ type Message = {
   content: string;
 };
 
-const CustomMarkdown: React.FC<{
-  content: string;
-  onClickButton: (text: string) => void;
-}> = ({ content, onClickButton }) => {
-  const regex = /<<<<(.*?),(.*?)>>>>/g;
-  const parts: React.ReactNode[] = [];
-  let lastIndex = 0;
-  let match;
+export default function Message({
+  onUrlDetected,
+  initialQuery,
+  hasUsedInitialQuery,
+  handleContactUsClicked,
+}: MessageProps) {
+  const CustomMarkdown: React.FC<{
+    content: string;
+    onClickButton: (text: string) => void;
+  }> = ({ content, onClickButton }) => {
+    // Existing pattern for <<<<text,label>>>>
+    const buttonRegex = /<<<<(.*?),(.*?)>>>>/g;
+    // New pattern for >>>>contact_us<<<<
+    const contactRegex = />>>>contact_us<<<<|<<<<contact_us>>>>/g;
 
-  while ((match = regex.exec(content)) !== null) {
-    const before = content.slice(lastIndex, match.index);
-    if (before) {
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+
+    // Helper to push standard markdown parts
+    const pushMarkdown = (text: string, key: number) => {
+      if (!text) return;
       parts.push(
         <ReactMarkdown
-          key={lastIndex}
+          key={key}
           components={{
             a: ({ ...props }) => (
               <a
@@ -62,68 +73,62 @@ const CustomMarkdown: React.FC<{
             em: ({ ...props }) => <em className="italic" {...props} />,
           }}
         >
-          {before}
+          {text}
         </ReactMarkdown>
       );
-    }
+    };
 
-    const textToSend = match[1].trim();
-    const buttonLabel = match[2].trim();
+    // Combine both regex matches into one array
+    const matches = [
+      ...content.matchAll(buttonRegex),
+      ...content.matchAll(contactRegex),
+    ];
+    matches.sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
 
-    // render button
-    parts.push(
-      <button
-        key={match.index}
-        className="cursor-pointer block w-full my-2 px-2 py-1 bg-[#8B00CC] text-white text-sm rounded hover:bg-[#8B00CC]/90 transition text-left"
-        onClick={() => onClickButton(textToSend)}
-      >
-        {buttonLabel}
-      </button>
-    );
+    matches.forEach((match) => {
+      if (match.index === undefined) return;
+      const before = content.slice(lastIndex, match.index);
+      pushMarkdown(before, lastIndex);
 
-    lastIndex = regex.lastIndex;
-  }
+      if (match[0].includes("contact_us")) {
+        // Render special contact button
+        parts.push(
+          <button
+            key={match.index}
+            // onClick={() => console.log("Contact us button clicked")}
+            onClick={handleContactUsClicked}
+            className="group flex cursor-pointer w-50 my-2 px-2 py-2 bg-[#8B00CC] text-white text-sm rounded-lg hover:bg-[#8B00CC]/90 transition text-left items-center"
+          >
+            <span className="mr-3 flex items-center">
+              <ArrowRight className="h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+            Contact Us
+          </button>
+        );
+      } else {
+        // Regular <<<<text,label>>>> buttons
+        const textToSend = match[1].trim();
+        const buttonLabel = match[2].trim();
+        parts.push(
+          <button
+            key={match.index}
+            className="cursor-pointer block w-full my-2 px-2 py-1 bg-[#8B00CC] text-white text-sm rounded hover:bg-[#8B00CC]/90 transition text-left"
+            onClick={() => onClickButton(textToSend)}
+          >
+            {buttonLabel}
+          </button>
+        );
+      }
+      lastIndex = (match.index ?? 0) + match[0].length;
+    });
 
-  const after = content.slice(lastIndex);
-  if (after) {
-    parts.push(
-      <ReactMarkdown
-        key={lastIndex}
-        components={{
-          a: ({ ...props }) => (
-            <a
-              className="text-blue-600 underline hover:text-blue-800"
-              target="_blank"
-              rel="noopener noreferrer"
-              {...props}
-            />
-          ),
-          pre: ({ ...props }) => (
-            <pre
-              className="bg-gray-100 p-2 rounded my-2 overflow-x-auto"
-              {...props}
-            />
-          ),
-          code: ({ ...props }) => (
-            <code className="bg-gray-100 rounded px-1 py-0.5" {...props} />
-          ),
-          strong: ({ ...props }) => <strong className="font-bold" {...props} />,
-          em: ({ ...props }) => <em className="italic" {...props} />,
-        }}
-      >
-        {after}
-      </ReactMarkdown>
-    );
-  }
+    // Push remaining markdown
+    const after = content.slice(lastIndex);
+    pushMarkdown(after, lastIndex);
 
-  return <>{parts}</>;
-};
+    return <>{parts}</>;
+  };
 
-export default function Message({
-  onUrlDetected,
-  initialQuery,
-  hasUsedInitialQuery,
-}: MessageProps) {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
