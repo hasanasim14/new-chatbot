@@ -10,6 +10,7 @@ import {
 } from "@/lib/tempStore";
 import { TextAreaMessage } from "./TextAreaMessage";
 import ReactMarkdown from "react-markdown";
+import { Poppins_font } from "./HeroSection";
 
 interface MessageProps {
   onUrlDetected: (url: string) => void;
@@ -317,7 +318,7 @@ export default function Message({
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className={`${Poppins_font.className} flex flex-col h-full`}>
       {/* Header */}
       <div className="flex items-center p-4 border-b bg-white">
         <h2 className="font-bold text-xl">Mayfair Support</h2>

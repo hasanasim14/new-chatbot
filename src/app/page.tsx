@@ -11,7 +11,7 @@ import {
 import { MessageSquare, Home, MessageCircle } from "lucide-react";
 import Message from "@/components/homepage/Message";
 import HomePage from "@/components/homepage/Home";
-import HeroSection from "@/components/homepage/HeroSection";
+import HeroSection, { Poppins_font } from "@/components/homepage/HeroSection";
 import Image from "next/image";
 import Link from "next/link";
 import ContactUs from "@/components/homepage/ContactUsForm";
@@ -64,7 +64,7 @@ export default function ChatButton() {
     switch (currentPage) {
       case "message":
         return (
-          <div className="flex flex-col h-full">
+          <div className={`${Poppins_font.className} flex flex-col h-full`}>
             <div className="flex-1 overflow-y-auto">
               <Message
                 initialQuery={initialQuery}
@@ -102,7 +102,7 @@ export default function ChatButton() {
 
       default: // 'home'
         return (
-          <div className="flex flex-col h-full">
+          <div className={`${Poppins_font.className} flex flex-col h-full`}>
             <div className="flex-1 overflow-y-auto">
               <HomePage
                 onCardClick={(content) => sendMessage(content)}
