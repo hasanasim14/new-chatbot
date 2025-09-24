@@ -35,8 +35,8 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
   };
 
   // checking for empty fields of the form
-  const isFormIncomplete = Object.values(formData).some(
-    (value) => !value.trim()
+  const isFormIncomplete = Object.entries(formData).some(
+    ([key, value]) => key !== "Phone" && !value.trim()
   );
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,10 +67,14 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
   };
 
   return (
+    // <div
+    //   className={`${Poppins_font.className} flex items-center justify-center bg-white py-8 px-2`}
+    // >
     <div
-      className={`${Poppins_font.className} flex items-center justify-center bg-white py-8 px-2`}
+      className={`${Poppins_font.className} flex flex-col h-full max-h-screen`}
     >
-      <div className="w-full max-w-lg bg-white/95 max-h-[75vh] overflow-y-auto">
+      {/* <div className="w-full max-w-lg bg-white/95 max-h-[75vh] overflow-y-auto"> */}
+      <div className="w-full max-w-lg bg-white/95 h-full overflow-y-auto">
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div className="text-center relative">
@@ -119,7 +123,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
               htmlFor="Email"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Email
+              Email Address
             </label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -142,7 +146,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
               htmlFor="Phone"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Phone
+              Phone Number
             </label>
             <div className="relative">
               <PhoneCall className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -152,7 +156,6 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
                 type="tel"
                 value={formData.Phone}
                 onChange={handleChange}
-                required
                 placeholder="(123) 456-7890"
                 className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               />
@@ -204,19 +207,38 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
             </div>
           </div>
 
-          <Button
-            className="w-full bg-[#8B00CC] hover:bg-[#8B00CC]/90"
-            disabled={isFormIncomplete}
-          >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center gap-2">
-                <Loader2 className="animate-spin mr-2" />
-                Sending...
-              </span>
-            ) : (
-              "Send Message"
-            )}
-          </Button>
+          <div className="flex flex-wrap gap-3 mt-4">
+            <Button
+              className="w-38 bg-[#1E90FF] text-white hover:bg-[#1E90FF]/90 px-5 py-2 rounded-lg font-medium shadow-sm disabled:opacity-60"
+              disabled={isFormIncomplete}
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                "Send Message"
+              )}
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-38 border-gray-300 text-gray-700 hover:bg-gray-100 px-5 py-2 rounded-lg font-medium shadow-sm"
+              onClick={() =>
+                setFormData({
+                  FullName: "",
+                  Email: "",
+                  Message: "",
+                  Subject: "",
+                  Phone: "",
+                })
+              }
+            >
+              Clear Form
+            </Button>
+          </div>
         </form>
       </div>
     </div>

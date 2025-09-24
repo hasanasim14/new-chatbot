@@ -97,10 +97,10 @@ export default function HomePage({
             </p>
             <Button
               onClick={handleContact}
-              className="w-full text-white bg-[#8B00CC] transition-all hover:bg-[#8B00CC]/90"
+              className="w-full text-white bg-[#8B00CC] transition-all hover:bg-[#8B00CC]/90 group"
             >
               Contact Us
-              <ChevronRight className="ml-2 h-4 w-4" />
+              <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </div>
         </div>
