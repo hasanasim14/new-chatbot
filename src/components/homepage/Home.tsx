@@ -30,17 +30,17 @@ export default function HomePage({
   const cardItems = [
     {
       text: "About Mayfair",
-      icon: <Info className="h-5 w-5 text-[#8B00CC]" />,
+      icon: <Info className="h-5 w-5 text-[#1e3a8a]" />,
       query: "What is mayfair?",
     },
     {
       text: "Leadership Team",
-      icon: <Users className="h-5 w-5 text-[#8B00CC]" />,
+      icon: <Users className="h-5 w-5 text-[#1e3a8a]" />,
       query: "Leadership Team",
     },
     {
       text: "Customer Support",
-      icon: <Headphones className="h-5 w-5 text-[#8B00CC]" />,
+      icon: <Headphones className="h-5 w-5 text-[#1e3a8a]" />,
       query: "Customer Support",
     },
   ];
@@ -55,7 +55,8 @@ export default function HomePage({
 
   return (
     <div
-      className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]`}
+      // className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]`}
+      className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-[#1e3a8a]`}
     >
       <div className="p-3 backdrop-blur overflow-y-auto flex-1">
         <h2 className="text-lg font-semibold text-white drop-shadow-sm space-y-1 mt-4">
@@ -80,15 +81,15 @@ export default function HomePage({
                       {item.text}
                     </span>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-gray-400 stroke-[3] transition-colors duration-200 group-hover:text-[#8B00CC]" />
+                  <ChevronRight className="h-5 w-5 text-gray-400 stroke-[3] transition-colors duration-200 group-hover:text-[#1e3a8a]" />
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="max-w-sm mx-auto mt-6 p-5 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl text-center">
-            <h3 className="text-lg font-semibold text-[#8B00CC] mb-2 flex items-center justify-center gap-2">
-              <Phone className="h-5 w-5 text-[#8B00CC]" />
+            <h3 className="text-lg font-semibold text-[#1e3a8a] mb-2 flex items-center justify-center gap-2">
+              <Phone className="h-5 w-5" />
               Get in Touch
             </h3>
             <p className="text-gray-700 text-sm mb-4">
@@ -97,7 +98,7 @@ export default function HomePage({
             </p>
             <Button
               onClick={handleContact}
-              className="w-full text-white bg-[#8B00CC] transition-all hover:bg-[#8B00CC]/90 group"
+              className="w-full text-white bg-[#1e3a8a] transition-all hover:bg-[#1e3a8a]/90 group"
             >
               Contact Us
               <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

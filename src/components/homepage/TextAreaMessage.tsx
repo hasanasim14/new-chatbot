@@ -47,7 +47,7 @@ export const TextAreaMessage = ({
             disabled={isLoading || !message.trim()}
             className={`ml-2 rounded-full p-2 cursor-pointer disabled:opacity-50 ${
               message.trim()
-                ? "bg-[#8B00CC]/80 hover:bg-[#8B00CC]"
+                ? "bg-[#1e3a8a]/80 hover:bg-[#1e3a8a]"
                 : "bg-gray-200 hover:bg-gray-300"
             }`}
           >

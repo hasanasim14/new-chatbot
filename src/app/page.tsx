@@ -21,6 +21,9 @@ type PopoverPage = "home" | "message" | "contact";
 export default function ChatButton() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<PopoverPage>("home");
+  const [contactSource, setContactSource] = useState<"home" | "message">(
+    "home"
+  );
   // eslint-disable-next-line
   const [currentUrl, setCurrentUrl] = useState("https://www.mulphilog.com/");
   const [message, setMessage] = useState("");
@@ -53,11 +56,9 @@ export default function ChatButton() {
   };
 
   const handleContactUsClicked = () => {
+    // Set the source before navigating to contact
+    setContactSource(currentPage === "message" ? "message" : "home");
     setCurrentPage("contact");
-  };
-
-  const redirectToHome = () => {
-    setCurrentPage("home");
   };
 
   const renderPage = () => {
@@ -76,7 +77,7 @@ export default function ChatButton() {
             <div className="flex justify-around bg-white rounded-b-2xl sticky bottom-0">
               <Button
                 variant="ghost"
-                className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#8B00CC] cursor-pointer"
+                className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#1e3a8a] cursor-pointer"
                 onClick={() => navigateTo("home")}
               >
                 <Home className="h-6 w-6" />
@@ -84,7 +85,7 @@ export default function ChatButton() {
               </Button>
               <Button
                 variant="ghost"
-                className="flex flex-col items-center gap-1 h-auto text-[#8B00CC] cursor-pointer"
+                className="flex flex-col items-center gap-1 h-auto text-[#1e3a8a] cursor-pointer"
                 onClick={() => navigateTo("message")}
               >
                 <MessageCircle className="h-6 w-6" />
@@ -97,7 +98,11 @@ export default function ChatButton() {
       case "contact":
         return (
           <div className="flex flex-col h-full">
-            <ContactUs redirectToHome={redirectToHome} />
+            <ContactUs
+              fromScreen={contactSource}
+              onBackToHome={() => setCurrentPage("home")}
+              onBackToMessage={() => setCurrentPage("message")}
+            />
           </div>
         );
 
@@ -122,7 +127,7 @@ export default function ChatButton() {
               <div className="flex justify-around border-b border-gray-200">
                 <Button
                   variant="ghost"
-                  className="flex flex-col items-center gap-1 h-auto text-[#8B00CC] cursor-pointer hover:text-[#8B00CC]"
+                  className="flex flex-col items-center gap-1 h-auto text-[#1e3a8a] cursor-pointer hover:text-[#1e3a8a]"
                   onClick={() => navigateTo("home")}
                 >
                   <Home className="h-6 w-6" />
@@ -130,7 +135,7 @@ export default function ChatButton() {
                 </Button>
                 <Button
                   variant="ghost"
-                  className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#8B00CC] cursor-pointer"
+                  className="flex flex-col items-center gap-1 h-auto text-gray-500 hover:text-[#1e3a8a] cursor-pointer"
                   onClick={() => navigateTo("message")}
                 >
                   <MessageCircle className="h-6 w-6" />
@@ -161,9 +166,9 @@ export default function ChatButton() {
             <Button
               className={`h-14 w-14 rounded-full shadow-xl transition-all duration-300 ${
                 !open && "hover:scale-110"
-              } bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF] 
-       hover:from-[#6E00A8] hover:via-[#9E33E6] hover:to-[#C266FF]
-       p-0 flex items-center justify-center`}
+              } bg-gradient-to-br from-[#1d4ed8] via-[#1e3a8a] to-[#172554]
+     hover:from-[#2563eb] hover:via-[#1e40af] hover:to-[#0f172a]
+     p-0 flex items-center justify-center`}
               aria-label="Open chat"
             >
               <MessageSquare className="h-6 w-6 text-white" />

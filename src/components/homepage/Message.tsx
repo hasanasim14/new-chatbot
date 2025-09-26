@@ -95,9 +95,8 @@ export default function Message({
         parts.push(
           <button
             key={match.index}
-            // onClick={() => console.log("Contact us button clicked")}
             onClick={handleContactUsClicked}
-            className="group flex cursor-pointer w-50 my-2 px-2 py-2 bg-[#8B00CC] text-white text-sm rounded-lg hover:bg-[#8B00CC]/90 transition text-left items-center"
+            className="group flex cursor-pointer w-50 my-2 px-2 py-2 bg-[#1e3a8a] text-white text-sm rounded-lg hover:bg-[#1e3a8a]/90 transition text-left items-center"
           >
             <span className="mr-3 flex items-center">
               <ArrowRight className="h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1" />
@@ -112,7 +111,7 @@ export default function Message({
         parts.push(
           <button
             key={match.index}
-            className="cursor-pointer block w-full my-2 px-2 py-1 bg-[#8B00CC] text-white text-sm rounded hover:bg-[#8B00CC]/90 transition text-left"
+            className="cursor-pointer block w-full my-2 px-2 py-1 bg-[#1e3a8a] text-white text-sm rounded hover:bg-[#1e3a8a]/90 transition text-left"
             onClick={() => onClickButton(textToSend)}
           >
             {buttonLabel}
@@ -344,7 +343,7 @@ export default function Message({
               if (msg.role === "user") {
                 return (
                   <div key={index} className="flex justify-end w-full">
-                    <div className="bg-[#8B00CC] text-white text-sm rounded-lg px-4 py-2 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
+                    <div className="bg-[#1e3a8a] text-white text-sm rounded-lg px-4 py-2 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
                       <p className="whitespace-pre-wrap">{msg.content}</p>
                     </div>
                   </div>

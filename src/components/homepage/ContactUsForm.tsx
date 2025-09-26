@@ -9,15 +9,26 @@ import {
   MessageSquare,
   Loader2,
   ChevronLeft,
+  CheckCircle,
 } from "lucide-react";
 import { Poppins_font } from "./HeroSection";
 import { Button } from "../ui/button";
 
+type FromScreen = "home" | "message" | "contact";
+
 interface ContactUs {
-  redirectToHome: () => void;
+  fromScreen: FromScreen;
+  onBackToHome: () => void;
+  onBackToMessage: () => void;
 }
 
-export default function ContactUs({ redirectToHome }: ContactUs) {
+import { useRef } from "react";
+
+export default function ContactUs({
+  fromScreen,
+  onBackToHome,
+  onBackToMessage,
+}: ContactUs) {
   const [formData, setFormData] = useState({
     FullName: "",
     Email: "",
@@ -26,6 +37,8 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
     Phone: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,7 +47,6 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // checking for empty fields of the form
   const isFormIncomplete = Object.entries(formData).some(
     ([key, value]) => key !== "Phone" && !value.trim()
   );
@@ -42,12 +54,13 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSuccessMessage("");
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/emailHina`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formData }),
+        body: JSON.stringify(formData),
       });
 
       if (res.ok) {
@@ -58,6 +71,15 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
           Subject: "",
           Phone: "",
         });
+        setSuccessMessage(
+          "Thank you for reaching out! Your message has been successfully sent."
+        );
+
+        setTimeout(() => {
+          if (containerRef.current) {
+            containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }, 100);
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -67,32 +89,42 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
   };
 
   return (
-    // <div
-    //   className={`${Poppins_font.className} flex items-center justify-center bg-white py-8 px-2`}
-    // >
     <div
       className={`${Poppins_font.className} flex flex-col h-full max-h-screen`}
     >
-      {/* <div className="w-full max-w-lg bg-white/95 max-h-[75vh] overflow-y-auto"> */}
-      <div className="w-full max-w-lg bg-white/95 h-full overflow-y-auto">
-        {/* Form */}
+      <div
+        ref={containerRef}
+        className="w-full max-w-lg bg-white/95 h-full overflow-y-auto scroll-smooth"
+      >
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           <div className="text-center relative">
-            {/* back button */}
             <button
               type="button"
-              onClick={redirectToHome}
+              onClick={() => {
+                if (fromScreen === "home") {
+                  onBackToHome();
+                } else {
+                  onBackToMessage();
+                }
+              }}
               className="absolute -left-6 top-1/4 transform -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full hover:bg-purple-50 transition-colors duration-200 cursor-pointer"
             >
-              <ChevronLeft className="w-6 h-6 text-[#8B00CC]" />
+              <ChevronLeft className="w-6 h-6 text-[#1e3a8a]" />
             </button>
-            <h2 className="text-3xl font-bold text-[#8B00CC] drop-shadow">
+            <h2 className="text-3xl font-bold text-[#1e3a8a] drop-shadow">
               Let&apos;s Get In Touch.
             </h2>
-            <p className="text-[#8B00CC]/80 mt-2">
+            <p className="text-[#1e3a8a]/80 mt-2">
               We&apos;d love to hear from you!
             </p>
           </div>
+
+          {successMessage && (
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-green-100 border border-green-300 text-green-700 text-sm">
+              <CheckCircle className="h-5 w-5 text-green-600 shrink-0" />
+              {successMessage}
+            </div>
+          )}
 
           {/* Full Name */}
           <div>
@@ -112,7 +144,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
                 onChange={handleChange}
                 required
                 placeholder="Enter your full name"
-                className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/60 focus:border-transparent transition-all"
               />
             </div>
           </div>
@@ -135,7 +167,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
                 onChange={handleChange}
                 required
                 placeholder="your.email@example.com"
-                className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/60 focus:border-transparent transition-all"
               />
             </div>
           </div>
@@ -157,7 +189,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
                 value={formData.Phone}
                 onChange={handleChange}
                 placeholder="(123) 456-7890"
-                className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/60 focus:border-transparent transition-all"
               />
             </div>
           </div>
@@ -178,7 +210,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
               onChange={handleChange}
               required
               placeholder="What is this regarding?"
-              className="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              className="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/60 focus:border-transparent transition-all"
             />
           </div>
 
@@ -201,7 +233,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
                 rows={4}
                 placeholder="Tell us how we can help you..."
                 className="pl-10 block w-full rounded-lg border border-gray-300 px-4 py-3 
-                 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent 
+                 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/60 focus:border-transparent 
                  transition-all min-h-[120px]"
               />
             </div>
@@ -209,7 +241,7 @@ export default function ContactUs({ redirectToHome }: ContactUs) {
 
           <div className="flex flex-wrap gap-3 mt-4">
             <Button
-              className="w-38 bg-[#1E90FF] text-white hover:bg-[#1E90FF]/90 px-5 py-2 rounded-lg font-medium shadow-sm disabled:opacity-60"
+              className="w-38 bg-[#1e3a8a] text-white hover:bg-[#1e3a8a]/90 px-5 py-2 rounded-lg font-medium shadow-sm disabled:opacity-60"
               disabled={isFormIncomplete}
             >
               {isSubmitting ? (

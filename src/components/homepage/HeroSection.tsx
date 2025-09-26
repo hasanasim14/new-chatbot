@@ -12,7 +12,8 @@ const HeroSection = () => {
     <div
       className={`${Poppins_font.className} relative min-h-screen w-full bg-white p-6 flex items-center justify-center`}
     >
-      <div className="max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 text-white shadow-2xl p-10 space-y-10">
+      {/* <div className="max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-[#1e3a8a]-700 via-[#1e3a8a]-800 to-[#1e3a8a]-900 text-white shadow-2xl p-10 space-y-10"> */}
+      <div className="max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#0f172a] text-white shadow-2xl p-10 space-y-10">
         <div className="space-y-4 text-center">
           <h1 className="text-3xl md:text-4xl font-bold">
             Welcome to <span className="text-yellow-400">Mayfair - AIVA</span>,
