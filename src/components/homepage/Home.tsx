@@ -30,17 +30,17 @@ export default function HomePage({
   const cardItems = [
     {
       text: "About Mayfair",
-      icon: <Info className="h-5 w-5 text-[#1e3a8a]" />,
+      icon: <Info className="h-5 w-5 text-[#fff]" />,
       query: "What is mayfair?",
     },
     {
       text: "Leadership Team",
-      icon: <Users className="h-5 w-5 text-[#1e3a8a]" />,
+      icon: <Users className="h-5 w-5 text-[#fff]" />,
       query: "Leadership Team",
     },
     {
       text: "Customer Support",
-      icon: <Headphones className="h-5 w-5 text-[#1e3a8a]" />,
+      icon: <Headphones className="h-5 w-5 text-[#fff]" />,
       query: "Customer Support",
     },
   ];
@@ -55,11 +55,10 @@ export default function HomePage({
 
   return (
     <div
-      // className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-gradient-to-br from-[#5B0094] via-[#8B00CC] to-[#B84DFF]`}
-      className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-[#1e3a8a]`}
+      className={`${Poppins_font.className} flex flex-col h-full max-h-screen bg-[#fff]`}
     >
       <div className="p-3 backdrop-blur overflow-y-auto flex-1">
-        <h2 className="text-lg font-semibold text-white drop-shadow-sm space-y-1 mt-4">
+        <h2 className="text-lg font-semibold text-[#1e3a8a] space-y-1 mt-4">
           <span className="block">👋 Hi, I’m your MayfairTech Assistant!</span>
           <span className="block text-center">How can I help you today?</span>
         </h2>
@@ -67,27 +66,32 @@ export default function HomePage({
         <div className="flex-1 px-4 py-2">
           <div className="flex gap-4 mb-4"></div>
 
-          <div className="max-w-sm mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-            <ul className="divide-y divide-gray-200">
+          <div className="max-w-sm mx-auto bg-[#1e3a8a] backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+            <ul className="divide-y divide-white/10">
               {cardItems.map((item, index) => (
                 <li
                   key={index}
                   onClick={() => handleCardClick(item.query)}
-                  className="flex items-center justify-between p-2 group hover:bg-gray-50/80 transition-colors duration-300 cursor-pointer"
+                  className="flex items-center justify-between p-2 group 
+                   hover:bg-[#264499] transition-colors duration-300 
+                   cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     {item.icon}
-                    <span className="text-gray-800 font-medium">
+                    <span className="text-white font-medium transition-colors duration-300 group-hover:text-gray-100">
                       {item.text}
                     </span>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-gray-400 stroke-[3] transition-colors duration-200 group-hover:text-[#1e3a8a]" />
+                  <ChevronRight
+                    className="h-5 w-5 text-gray-300 stroke-[3] 
+                     transition-colors duration-300 group-hover:text-white"
+                  />
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="max-w-sm mx-auto mt-6 p-5 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl text-center">
+          <div className="max-w-sm mx-auto mt-6 p-5 bg-[#fff] rounded-2xl shadow-md text-center">
             <h3 className="text-lg font-semibold text-[#1e3a8a] mb-2 flex items-center justify-center gap-2">
               <Phone className="h-5 w-5" />
               Get in Touch
@@ -98,7 +102,7 @@ export default function HomePage({
             </p>
             <Button
               onClick={handleContact}
-              className="w-full text-white bg-[#1e3a8a] transition-all hover:bg-[#1e3a8a]/90 group"
+              className="w-full text-white bg-[#1e3a8a] transition-all hover:bg-[#264499] group"
             >
               Contact Us
               <ChevronRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
