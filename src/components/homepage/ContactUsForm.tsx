@@ -57,10 +57,14 @@ export default function ContactUs({
     setSuccessMessage("");
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/emailHina`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/fwder`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          endpoint: "emailHina",
+          org: "G3uyRBGv0s",
+        }),
       });
 
       if (res.ok) {

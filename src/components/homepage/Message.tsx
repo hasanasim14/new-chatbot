@@ -143,17 +143,18 @@ export default function Message({
 
   const fetchExistingMessages = async (sessionId: string) => {
     try {
-      const res = await fetch(
-        process.env.NEXT_PUBLIC_BASE_URL + "/chatHistory",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: "3UZdrsMC0aHIxcIOlo1cUrFmLSb57Ule",
-          },
-          body: JSON.stringify({ sessionid: sessionId }),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/fwder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "3UZdrsMC0aHIxcIOlo1cUrFmLSb57Ule",
+        },
+        body: JSON.stringify({
+          sessionid: sessionId,
+          endpoint: "chatHistory",
+          org: "G3uyRBGv0s",
+        }),
+      });
 
       if (!res.ok) throw new Error("API Not working");
 
@@ -252,7 +253,7 @@ export default function Message({
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/agent`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/webhook`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -261,6 +262,8 @@ export default function Message({
         body: JSON.stringify({
           query: userQuery,
           sessionid: getTempSessionID(),
+          platform: "Web",
+          org: "G3uyRBGv0s",
         }),
         signal: controller.signal,
       });
